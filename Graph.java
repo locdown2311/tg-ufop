@@ -10,8 +10,10 @@ class Graph {
   }
 
   public void addEdge(int source, int sink, int weight) {
-    if (source < 0 || source > _adjMatrix.length - 1 || sink < 0 || sink > _adjMatrix.length - 1 || weight <= 0) {
-      System.err.println("Invalid edge: " + source + sink + weight);
+    if (source < 0 || source > this._adjMatrix.length - 1 ||
+        sink < 0 || sink > this._adjMatrix.length - 1 ||
+        weight <= 0) {
+      System.err.printf("Invalid edge: %d %d %d\n", source, sink, weight);
       return;
     }
     this._countEdges++;
@@ -29,28 +31,47 @@ class Graph {
   }
 
   public int highestDegree() {
-    int maiorGrau = 0;
-    for (int i = 0; i < _countNodes; i++) {
-      if (maiorGrau < degree(i)) {
-        maiorGrau = degree(i);
-      }
+    int highest = 0;
+    for (int i = 0; i < this._adjMatrix.length; ++i) {
+      int maiorGrau = degree(i);
+      if (maiorGrau > highest)
+        highest = maiorGrau;
     }
-    return maiorGrau;
+    return highest;
   }
-  public int lowestDegree(){
+
+  public int lowestDegree() {
     int menorGrau = 50000;
-    for (int i = 0; i < _countNodes; i++) {
-      if (menorGrau < degree(i)) {
+    for (int i = 0; i < this._adjMatrix.length; i++) {
+      if (menorGrau > degree(i)) {
         menorGrau = degree(i);
       }
     }
     return menorGrau;
   }
 
+  public Graph complement() {
+    // O que falta para o grafo ficar completo
+    Graph copia = new Graph(this._countNodes);
+    for (int i = 0; i < this._adjMatrix.length; ++i) {
+      for (int j = 0; j < this._adjMatrix[i].length; ++j) {
+        if (this._adjMatrix[i][j] == 0 && i != j) {
+          copia.addEdge(i, j, 1);
+        }
+      }
+    }
+    return copia;
+  }
+
+  public boolean subGraph(Graph gh) {
+    
+    return true;
+  }
+
   public String toString() {
     String str = "";
     for (int i = 0; i < this._adjMatrix.length; ++i) {
-      for (int j = 0; i < this._adjMatrix[i].length; ++j) {
+      for (int j = 0; j < this._adjMatrix[i].length; ++j) {
         str += this._adjMatrix[i][j] + "\t";
       }
       str += "\n";
