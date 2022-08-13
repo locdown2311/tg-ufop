@@ -63,8 +63,20 @@ class Graph {
     return copia;
   }
 
-  public boolean subGraph(Graph gh) {
-    
+  public boolean subGraph(Graph g2) {
+
+    Graph g1 = this;
+
+    if(g2._countNodes > g1._countNodes || g2._countEdges > g1._countEdges ){
+      return false;
+    }
+    for (int i = 0 ; i< g1._adjMatrix.length;++i ){
+      for (int j = 0; j<g1._adjMatrix[i].length;++j){
+        if(g2._adjMatrix[i][j] != 0 && g1._adjMatrix[i][j] == 0){
+          return false;
+        }
+      }
+    }
     return true;
   }
 
