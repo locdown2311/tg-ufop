@@ -1,4 +1,5 @@
 class Graph {
+  //
   private int _countNodes;
   private int _countEdges;
   private int[][] _adjMatrix;
