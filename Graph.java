@@ -91,14 +91,14 @@ class Graph {
     for (int i = 0; i < this._adjMatrix.length; i++) {
       for (int j = 0; j < this._adjMatrix.length; j++) {
         if (i == j && this._adjMatrix[i][j] != 0) {
-          return false;
+          return true;
         }
         if (this._adjMatrix[i][j] != this._adjMatrix[j][i]) {
-          return false;
+          return true;
         }
       }
     }
-    return true;
+    return false;
   }
 
   public String toString() {
