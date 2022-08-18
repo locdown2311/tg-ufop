@@ -22,6 +22,11 @@ class Main {
     //Sub-grafos
     Graph g2,g3,g4;
     g2 = new Graph(4);
+    System.out.println("Densidade: ");
+
+    System.out.println(grafo.density());
+    System.out.println("Orientado? ");
+    System.out.println(grafo.oriented());
     g3 = new Graph(4);
     g4 = new Graph(4);
   }
