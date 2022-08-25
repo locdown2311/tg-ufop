@@ -46,10 +46,10 @@ class Graph {
     return grau;
   }
 
-  public List<Integer> BuscaLargura(Graph pesquisa,int origem){
+  public List<Integer> BuscaLargura(int origem){
     List<Integer> q = new ArrayList<Integer>();
     List<Integer> r = new ArrayList<Integer>();
-    int desc[] = new int[pesquisa._countNodes] ;
+    int desc[] = new int[this._countNodes] ;
 //    for(int v = 0;v<pesquisa._adjMatrix[v].length;++v){
 //      desc[v] = 0;
 //    }
