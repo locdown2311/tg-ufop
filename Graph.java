@@ -81,6 +81,9 @@ class Graph {
     }
     return highest;
   }
+  public boolean conected(){
+    return this.BuscaLargura(0).size() == this._countNodes;
+  }
 
   public int lowestDegree() {
     int menorGrau = 50000;
