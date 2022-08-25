@@ -50,9 +50,9 @@ class Graph {
     List<Integer> q = new ArrayList<Integer>();
     List<Integer> r = new ArrayList<Integer>();
     int desc[] = new int[pesquisa._countNodes] ;
-    for(int v = 0;v<pesquisa._adjMatrix[v].length;++v){
-      desc[v] = 0;
-    }
+//    for(int v = 0;v<pesquisa._adjMatrix[v].length;++v){
+//      desc[v] = 0;
+//    }
     q.add(origem);
     r.add(origem);
     desc[origem] = 1;
