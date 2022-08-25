@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.ArrayList;
+
 class Graph {
   //
   private int _countNodes;
@@ -21,6 +24,18 @@ class Graph {
     this._adjMatrix[source][sink] = weight;
   }
 
+  public void addEdgeUnoriented(int source, int sink, int weight) {
+    if (source < 0 || source > this._adjMatrix.length - 1 ||
+        sink < 0 || sink > this._adjMatrix.length - 1 ||
+        weight <= 0) {
+      System.err.printf("Invalid edge: %d %d %d\n", source, sink, weight);
+      return;
+    }
+    this._countEdges += 2;
+    this._adjMatrix[source][sink] = weight;
+    this._adjMatrix[sink][source] = weight;
+  }
+
   public int degree(int node) {
     int grau = 0;
     for (int j = 0; j < this._adjMatrix[node].length; ++j) {
@@ -29,6 +44,32 @@ class Graph {
       }
     }
     return grau;
+  }
+
+  public List<Integer> BuscaLargura(Graph pesquisa,int origem){
+    List<Integer> q = new ArrayList<Integer>();
+    List<Integer> r = new ArrayList<Integer>();
+    int desc[] = new int[pesquisa._countNodes] ;
+    for(int v = 0;v<pesquisa._adjMatrix[v].length;++v){
+      desc[v] = 0;
+    }
+    q.add(origem);
+    r.add(origem);
+    desc[origem] = 1;
+
+    while(!q.isEmpty()){
+      int u = q.remove(0);
+      for(int v = 0;v<_adjMatrix[u].length;++v){
+        if(this._adjMatrix[u][v] != 0){ //verifica adjacente
+          if(desc[v]  == 0){
+            q.add(v);
+            r.add(v);
+            desc[v] = 1;
+          }
+        }
+      }
+    }
+    return r;
   }
 
   public int highestDegree() {
