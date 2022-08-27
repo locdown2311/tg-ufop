@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Stack;
 
 class Graph {
   //
@@ -46,22 +47,30 @@ class Graph {
     return grau;
   }
 
-  public List<Integer> BuscaLargura(int origem){
+  public int verificaAdjacente(int u, int[] desc) {
+    for (int v = 0; v < this._adjMatrix[u].length; ++v) {
+      if (this._adjMatrix[u][v] != 0) {
+        if (desc[v] == 0) {
+          return v;
+        }
+      }
+    }
+    return -1;
+  }
+
+  public List<Integer> BuscaLargura(int origem) {
     List<Integer> q = new ArrayList<Integer>();
     List<Integer> r = new ArrayList<Integer>();
-    int desc[] = new int[this._countNodes] ;
-//    for(int v = 0;v<pesquisa._adjMatrix[v].length;++v){
-//      desc[v] = 0;
-//    }
+    int desc[] = new int[this._countNodes];
     q.add(origem);
     r.add(origem);
     desc[origem] = 1;
 
-    while(!q.isEmpty()){
+    while (!q.isEmpty()) {
       int u = q.remove(0);
-      for(int v = 0;v<_adjMatrix[u].length;++v){
-        if(this._adjMatrix[u][v] != 0){ //verifica adjacente
-          if(desc[v]  == 0){
+      for (int v = 0; v < _adjMatrix[u].length; ++v) {
+        if (this._adjMatrix[u][v] != 0) { // verifica adjacente
+          if (desc[v] == 0) {
             q.add(v);
             r.add(v);
             desc[v] = 1;
@@ -70,6 +79,85 @@ class Graph {
       }
     }
     return r;
+  }
+
+  public List<Integer> BuscaLarguraV2(int origem) {
+    List<Integer> q = new ArrayList<Integer>();
+    List<Integer> r = new ArrayList<Integer>();
+    int desc[] = new int[this._countNodes];
+    q.add(origem);
+    r.add(origem);
+    desc[origem] = 1;
+
+    while (!q.isEmpty()) {
+      int u = q.remove(0);
+      int v = verificaAdjacente(u, desc);
+      if (v != -1) {
+        q.add(v);
+        r.add(v);
+        desc[v] = 1;
+      }
+    }
+    return r;
+  }
+
+  public List<Integer> descRec(int origem) {
+    int desc[] = new int[this._countNodes];
+    List<Integer> r = new ArrayList<Integer>();
+    descRecAux(origem, desc, r);
+    return r;
+  }
+
+  public void descRecAux(int u, int[] desc, List<Integer> r) {
+    desc[u] = 1;
+    r.add(u);
+    int v = verificaAdjacente(u, desc);
+    if (v != -1) {
+      descRecAux(v, desc, r);
+    }
+  }
+
+  /*
+   * public List<Integer> BuscaProfundidade(int origem) {
+   * Stack<Integer> s = new Stack<Integer>();
+   * List<Integer> r = new ArrayList<Integer>();
+   * int desc[] = new int[this._countNodes];
+   * desc[origem] = 1;
+   * while (!s.empty()) {
+   * int u = s.peek();
+   * int v = verificaAdjacente(u, desc);
+   * if (v != -1) {
+   * s.push(v);
+   * r.add(v);
+   * desc[v] = 1;
+   * } else {
+   * s.pop();
+   * }
+   * }
+   * return r;
+   * }
+   */
+  public ArrayList<Integer> dfs(int s) {
+    // initialization
+    int[] desc = new int[this._countNodes];
+    ArrayList<Integer> S = new ArrayList<>();
+    S.add(s);
+    ArrayList<Integer> R = new ArrayList<>();
+    R.add(s);
+    desc[s] = 1;
+    // main loop
+    while (S.size() > 0) {
+      int u = S.get(S.size() - 1);
+      int v = verificaAdjacente(u, desc);
+      if (v != -1) {
+        S.add(v);
+        R.add(v);
+        desc[v] = 1;
+      } else {
+        S.remove(S.size() - 1);
+      }
+    }
+    return R;
   }
 
   public int highestDegree() {
@@ -81,7 +169,8 @@ class Graph {
     }
     return highest;
   }
-  public boolean conected(){
+
+  public boolean conected() {
     return this.BuscaLargura(0).size() == this._countNodes;
   }
 
