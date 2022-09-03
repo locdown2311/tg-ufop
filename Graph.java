@@ -145,6 +145,28 @@ class Graph {
     }
   }
 
+  public boolean hasCycle(int origem) {
+    List<Integer> q = new ArrayList<Integer>();
+    List<Integer> r = new ArrayList<Integer>();
+    int desc[] = new int[this._countNodes];
+    q.add(origem);
+    r.add(origem);
+    desc[origem] = 1;
+
+    while (!q.isEmpty()) {
+      int u = q.remove(0);
+      int v = verificaAdjacente(u, desc);
+      if (v != -1) {
+        q.add(v);
+        r.add(v);
+        desc[v] = 1;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public List<Integer> descRec(int origem) {
     int desc[] = new int[this._countNodes];
     List<Integer> r = new ArrayList<Integer>();

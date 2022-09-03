@@ -26,9 +26,16 @@ class Main {
 
     int[] vet = g2.connectedComp();
 
-    // System.out.println(buscaprof);
-    // System.out.println(buscaprofRec);
+    for (int aux = 0; aux < vet.length; aux++) {
+      System.out.print(" " + vet[aux]);
+    }
+
+    System.out.print("\n");
+    System.out.println(g2.hasCycle(3));
     /*
+     * System.out.println(buscaprof);
+     * System.out.println(buscaprofRec);
+     * 
      * Graph complementar;
      * 
      * grafo.addEdge(0, 1, 3);
