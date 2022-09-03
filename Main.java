@@ -31,7 +31,7 @@ class Main {
     }
 
     System.out.print("\n");
-    System.out.println(g2.hasCycle(3));
+    System.out.println(g2.hasCycleOriented(3));
     /*
      * System.out.println(buscaprof);
      * System.out.println(buscaprofRec);
