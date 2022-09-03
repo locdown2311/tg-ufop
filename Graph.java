@@ -214,7 +214,7 @@ class Graph {
     return highest;
   }
 
-  public boolean conected() {
+  public boolean connected() {
     return this.BuscaLargura(0).size() == this._countNodes;
   }
 

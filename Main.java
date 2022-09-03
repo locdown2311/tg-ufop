@@ -2,23 +2,32 @@ import java.util.List;
 
 class Main {
   public static void main(String[] args) {
-    Graph g1 = new Graph(8);
-    g1.addEdgeUnoriented(6, 3, 1);
-    g1.addEdgeUnoriented(6, 7, 1);
-    g1.addEdgeUnoriented(6, 1, 1);
-    g1.addEdgeUnoriented(3, 4, 1);
-    g1.addEdgeUnoriented(7, 0, 1);
-    g1.addEdgeUnoriented(1, 2, 1);
-    g1.addEdgeUnoriented(0, 5, 1);
-    System.out.println(g1);
+    /*
+     * Graph g1 = new Graph(8);
+     * g1.addEdgeUnoriented(6, 3, 1);
+     * g1.addEdgeUnoriented(6, 7, 1);
+     * g1.addEdgeUnoriented(6, 1, 1);
+     * g1.addEdgeUnoriented(3, 4, 1);
+     * g1.addEdgeUnoriented(7, 0, 1);
+     * g1.addEdgeUnoriented(1, 2, 1);
+     * g1.addEdgeUnoriented(0, 5, 1);
+     * System.out.println(g1);
+     * 
+     * List<Integer> buscalarg = g1.BuscaLarguraV2(2);
+     * List<Integer> buscaprof = g1.dfs(2);
+     * List<Integer> buscaprofRec = g1.descRec(2);
+     */
 
-    List<Integer> buscalarg = g1.BuscaLarguraV2(2);
-    List<Integer> buscaprof = g1.dfs(2);
-    List<Integer> buscaprofRec = g1.descRec(2);
+    Graph g2 = new Graph(6);
+    g2.addEdgeUnoriented(0, 1, 1);
+    g2.addEdgeUnoriented(1, 4, 1);
+    g2.addEdgeUnoriented(4, 0, 1);
+    g2.addEdgeUnoriented(3, 5, 1);
 
-    System.out.println(buscalarg);
-    System.out.println(buscaprof);
-    System.out.println(buscaprofRec);
+    int[] vet = g2.connectedComp();
+
+    // System.out.println(buscaprof);
+    // System.out.println(buscaprofRec);
     /*
      * Graph complementar;
      * 
