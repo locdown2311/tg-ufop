@@ -102,6 +102,7 @@ class Graph {
   }
 
   // ordenação topológica só se aplica a DAE
+  // TOP SORT
   public ArrayList<Integer> topSort() {
     int[] desc = new int[this._countNodes];
     ArrayList<Integer> R = new ArrayList<>();
@@ -119,6 +120,29 @@ class Graph {
         topSortAux(v, desc, R);
     }
     R.add(0, u);
+  }
+
+  public int[] connectedComp() {
+    int[] desc = new int[this._countNodes];
+    int comp = 0;
+    for (int v = 0; v < this._adjMatrix.length; ++v) {
+      if (desc[v] == 0) {
+        comp++;
+        connectedCompAux(v, desc, comp);
+      }
+    }
+    return desc;
+  }
+
+  public void connectedCompAux(int u, int[] desc, int comp) {
+    desc[u] = comp;
+    for (int v = 0; v < this._adjMatrix[u].length; ++v) {
+      if (this._adjMatrix[u][v] != 0) {
+        if (desc[v] == 0) {
+          connectedCompAux(v, desc, comp);
+        }
+      }
+    }
   }
 
   public List<Integer> descRec(int origem) {
