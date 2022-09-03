@@ -58,6 +58,15 @@ class Graph {
     return -1;
   }
 
+  public int verificaAdjacentev2(int u, int[] desc) {
+    for (int v = 0; v < this._adjMatrix[u].length; ++v) {
+      if (this._adjMatrix[u][v] != 0) {
+        return v;
+      }
+    }
+    return -1;
+  }
+
   public List<Integer> BuscaLargura(int origem) {
     List<Integer> q = new ArrayList<Integer>();
     List<Integer> r = new ArrayList<Integer>();
@@ -155,7 +164,7 @@ class Graph {
 
     while (!q.isEmpty()) {
       int u = q.remove(0);
-      int v = verificaAdjacente(u, desc);
+      int v = verificaAdjacentev2(u, desc);
       if (v != -1) {
         q.add(v);
         r.add(v);
