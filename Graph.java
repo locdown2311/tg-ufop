@@ -16,6 +16,7 @@ class Graph {
     this._countEdges = 0;
     this._adjMatrix = new int[numNodes][numNodes];
   }
+
   public Graph(String fileName) throws IOException {
     File file = new File(fileName);
     FileReader reader = new FileReader(file);
@@ -39,12 +40,37 @@ class Graph {
     reader.close();
   }
 
-  public void dijkstra(int origem){
-    int dist[] = new int[this._countNodes];
+  int minDistance(int path_array[], Boolean predSet[]) {
+    int min = Integer.MAX_VALUE, min_index = -1;
+    for (int v = 0; v < this._countNodes; v++)
+      if (predSet[v] == false && path_array[v] <= min) {
+        min = path_array[v];
+        min_index = v;
+      }
 
-   List<Integer> pred = new ArrayList<Integer>();
+    return min_index;
+  }
+
+  public void dijkstra(int origem) {
+    int dist[] = new int[this._countNodes];
+    Boolean pred[] = new Boolean[this._countNodes];
+
+    for (int i = 0; i < dist.length; i++) {
+      dist[i] = Integer.MAX_VALUE;
+      pred[i] = false;
+    }
+    dist[origem] = 0;
+    for (int count = 0; count < this._countNodes - 1; count++) {
+      int u = minDistance(dist, pred);
+      pred[u] = true;
+      for (int v = 0; v < this._countNodes; v++)
+        if (!pred[v] && this._adjMatrix[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u]
+            + this._adjMatrix[u][v] < dist[v])
+          dist[v] = dist[u] + this._adjMatrix[u][v];
+    }
 
   }
+
   public void addEdge(int source, int sink, int weight) {
     if (source < 0 || source > this._adjMatrix.length - 1 ||
         sink < 0 || sink > this._adjMatrix.length - 1 ||
