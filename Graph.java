@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 class Graph {
-  //
   private int _countNodes;
   private int _countEdges;
   private int[][] _adjMatrix;
@@ -51,6 +50,12 @@ class Graph {
     return min_index;
   }
 
+  void printMinpath(int path_array[]) {
+    System.out.println("Nó# \t Distancia da Origem");
+    for (int i = 0; i < this._countNodes; i++)
+      System.out.println(i + " \t\t\t " + path_array[i]);
+  }
+
   public void dijkstra(int origem) {
     int dist[] = new int[this._countNodes];
     Boolean pred[] = new Boolean[this._countNodes];
@@ -68,7 +73,7 @@ class Graph {
             + this._adjMatrix[u][v] < dist[v])
           dist[v] = dist[u] + this._adjMatrix[u][v];
     }
-
+    printMinpath(dist);
   }
 
   public void addEdge(int source, int sink, int weight) {
