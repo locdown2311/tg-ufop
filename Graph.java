@@ -1,6 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Stack;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 class Graph {
   //
@@ -13,7 +16,35 @@ class Graph {
     this._countEdges = 0;
     this._adjMatrix = new int[numNodes][numNodes];
   }
+  public Graph(String fileName) throws IOException {
+    File file = new File(fileName);
+    FileReader reader = new FileReader(file);
+    BufferedReader bufferedReader = new BufferedReader(reader);
 
+    // Read header
+    String[] line = bufferedReader.readLine().split(" ");
+    this._countNodes = (Integer.parseInt(line[0]));
+    int fileLines = (Integer.parseInt(line[1]));
+
+    // Create and fill adjMatrix with read edges
+    this._adjMatrix = new int[this._countNodes][this._countNodes];
+    for (int i = 0; i < fileLines; ++i) {
+      String[] edgeInfo = bufferedReader.readLine().split(" ");
+      int source = Integer.parseInt(edgeInfo[0]);
+      int sink = Integer.parseInt(edgeInfo[1]);
+      int weight = Integer.parseInt(edgeInfo[2]);
+      addEdge(source, sink, weight);
+    }
+    bufferedReader.close();
+    reader.close();
+  }
+
+  public void dijkstra(int origem){
+    int dist[] = new int[this._countNodes];
+
+   List<Integer> pred = new ArrayList<Integer>();
+
+  }
   public void addEdge(int source, int sink, int weight) {
     if (source < 0 || source > this._adjMatrix.length - 1 ||
         sink < 0 || sink > this._adjMatrix.length - 1 ||
