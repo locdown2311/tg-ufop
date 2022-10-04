@@ -17,12 +17,13 @@ public class GraphList {
         Scanner sc = new Scanner(new File(filename));
         ArrayList<Integer> vertices = new ArrayList<Integer>();
         while(sc.hasNext()){
-            Integer i1 = sc.nextInteger();
+            Integer i1 = sc.nextInt();
             vertices.add(i1);
             sc.nextLine();
         }
         sc.close();
 
+        // para cada vértice do arraylist vertices
         for(Integer vertice:vertices){
             list[vertice] = new LinkedList<>();
         }
