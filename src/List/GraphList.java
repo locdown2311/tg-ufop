@@ -1,16 +1,30 @@
 package List;
 
 import java.util.LinkedList;
-
+import System.in.Scanner;
 public class GraphList {
-    int vertex;
-    LinkedList<Integer> list[];
+    private int vertex;
+    private LinkedList<Integer> list[];
 
     public GraphList(int vertex) {
         this.vertex = vertex;
         list = new LinkedList[vertex];
         for (int i = 0; i <vertex ; i++) {
             list[i] = new LinkedList<>();
+        }
+    }
+    public GraphList(String filename){
+        Scanner sc = new Scanner(new File(filename));
+        ArrayList<Integer> vertices = new ArrayList<Integer>();
+        while(sc.hasNext()){
+            Integer i1 = sc.nextInteger();
+            vertices.add(i1);
+            sc.nextLine();
+        }
+        sc.close();
+
+        for(Integer vertice:vertices){
+            list[vertice] = new LinkedList<>();
         }
     }
     // add edge oriented with weight
