@@ -277,6 +277,50 @@ public class GraphList {
         }
     }
 
+    // return djikstra path
+    public ArrayList<Integer> djikstra(int source, int sink) {
+        if (source < 0 || source > this.countNodes - 1) {
+            System.err.println("Invalid source: " + source);
+            return null;
+        }
+        if (sink < 0 || sink > this.countNodes - 1) {
+            System.err.println("Invalid sink: " + sink);
+            return null;
+        }
+        boolean[] visited = new boolean[this.countNodes];
+        int[] distance = new int[this.countNodes];
+        int[] parent = new int[this.countNodes];
+        for (int i = 0; i < this.countNodes; ++i) {
+            visited[i] = false;
+            distance[i] = INF;
+            parent[i] = -1;
+        }
+        visited[source] = true;
+        distance[source] = 0;
+        parent[source] = -1;
+        ArrayList<Integer> queue = new ArrayList<>();
+        queue.add(source);
+        while (!queue.isEmpty()) {
+            int u = queue.remove(0);
+            for (int idx = 0; idx < this.adjList.get(u).size(); ++idx) {
+                int v = this.adjList.get(u).get(idx).getSink();
+                if (!visited[v]) {
+                    visited[v] = true;
+                    distance[v] = distance[u] + 1;
+                    parent[v] = u;
+                    queue.add(v);
+                }
+            }
+        }
+        ArrayList<Integer> path = new ArrayList<>();
+        int u = sink;
+        while (u != -1) {
+            path.add(u);
+            u = parent[u];
+        }
+        return path;
+    }
+
     public ArrayList<Edge> kruskal() {
         ArrayList<Edge> T = new ArrayList<Edge>(this.countNodes - 1);
         int[] F = new int[this.countNodes];
