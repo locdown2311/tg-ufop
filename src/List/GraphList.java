@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GraphList {
 
@@ -320,34 +321,134 @@ public class GraphList {
         }
         return path;
     }
-
-    public ArrayList<Edge> kruskal() {
-        ArrayList<Edge> T = new ArrayList<Edge>(this.countNodes - 1);
-        int[] F = new int[this.countNodes];
-        // makeset(u)
-        for (int u = 0; u < this.countNodes; ++u)
-            F[u] = u;
-        edgeList.sort(null);
-        for (int idx = 0; idx < edgeList.size(); ++idx) {
-            int u = edgeList.get(idx).getSource();
-            int v = edgeList.get(idx).getSink();
-            if (F[u] != F[v]) { // findset(u) != findset(v)
-                T.add(edgeList.get(idx));
-                // Save some iterations if tree is already built
-                if (T.size() == countNodes - 1)
-                    break;
-                // union(u, v)
-                int k = F[v];
-                for (int i = 0; i < F.length; ++i) {
-                    if (F[i] == k) {
-                        F[i] = F[u];
+    //bellman-ford
+    public ArrayList<Integer> bellmanFord(int source, int sink) {
+        if (source < 0 || source > this.countNodes - 1) {
+            System.err.println("Invalid source: " + source);
+            return null;
+        }
+        if (sink < 0 || sink > this.countNodes - 1) {
+            System.err.println("Invalid sink: " + sink);
+            return null;
+        }
+        int[] distance = new int[this.countNodes];
+        int[] parent = new int[this.countNodes];
+        for (int i = 0; i < this.countNodes; ++i) {
+            distance[i] = INF;
+            parent[i] = -1;
+        }
+        distance[source] = 0;
+        parent[source] = -1;
+        for (int i = 0; i < this.countNodes - 1; ++i) {
+            for (int u = 0; u < this.countNodes; ++u) {
+                for (int idx = 0; idx < this.adjList.get(u).size(); ++idx) {
+                    int v = this.adjList.get(u).get(idx).getSink();
+                    int w = this.adjList.get(u).get(idx).getWeight();
+                    if (distance[u] + w < distance[v]) {
+                        distance[v] = distance[u] + w;
+                        parent[v] = u;
                     }
                 }
             }
         }
-        return T;
+        ArrayList<Integer> path = new ArrayList<>();
+        int u = sink;
+        while (u != -1) {
+            path.add(u);
+            u = parent[u];
+        }
+        return path;
+    }
+    //return path from source to sink floyd-warshall
+    public ArrayList<Integer> floydWarshall(int source, int sink) {
+        if (source < 0 || source > this.countNodes - 1) {
+            System.err.println("Invalid source: " + source);
+            return null;
+        }
+        if (sink < 0 || sink > this.countNodes - 1) {
+            System.err.println("Invalid sink: " + sink);
+            return null;
+        }
+        int[][] distance = new int[this.countNodes][this.countNodes];
+        int[][] parent = new int[this.countNodes][this.countNodes];
+        for (int i = 0; i < this.countNodes; ++i) {
+            for (int j = 0; j < this.countNodes; ++j) {
+                distance[i][j] = INF;
+                parent[i][j] = -1;
+            }
+        }
+        for (int u = 0; u < this.countNodes; ++u) {
+            for (int idx = 0; idx < this.adjList.get(u).size(); ++idx) {
+                int v = this.adjList.get(u).get(idx).getSink();
+                int w = this.adjList.get(u).get(idx).getWeight();
+                distance[u][v] = w;
+                parent[u][v] = u;
+            }
+        }
+        for (int k = 0; k < this.countNodes; ++k) {
+            for (int i = 0; i < this.countNodes; ++i) {
+                for (int j = 0; j < this.countNodes; ++j) {
+                    if (distance[i][k] + distance[k][j] < distance[i][j]) {
+                        distance[i][j] = distance[i][k] + distance[k][j];
+                        parent[i][j] = parent[k][j];
+                    }
+                }
+            }
+        }
+        ArrayList<Integer> path = new ArrayList<>();
+        int u = sink;
+        while (u != -1) {
+            path.add(u);
+            u = parent[source][u];
+        }
+        return path;
     }
 
+    // return path from source to sink kruskal
+    public ArrayList<Integer> kruskal(int source, int sink) {
+        if (source < 0 || source > this.countNodes - 1) {
+            System.err.println("Invalid source: " + source);
+            return null;
+        }
+        if (sink < 0 || sink > this.countNodes - 1) {
+            System.err.println("Invalid sink: " + sink);
+            return null;
+        }
+        ArrayList<Edge> edges = new ArrayList<>();
+        for (int u = 0; u < this.countNodes; ++u) {
+            for (int idx = 0; idx < this.adjList.get(u).size(); ++idx) {
+                int v = this.adjList.get(u).get(idx).getSink();
+                int w = this.adjList.get(u).get(idx).getWeight();
+                edges.add(new Edge(u, v, w));
+            }
+        }
+        Collections.sort(edges);
+        int[] parent = new int[this.countNodes];
+        for (int i = 0; i < this.countNodes; ++i) {
+            parent[i] = i;
+        }
+        ArrayList<Integer> path = new ArrayList<>();
+        for (int i = 0; i < edges.size(); ++i) {
+            int u = edges.get(i).getSource();
+            int v = edges.get(i).getSink();
+            int w = edges.get(i).getWeight();
+            int pu = find(u, parent);
+            int pv = find(v, parent);
+            if (pu != pv) {
+                parent[pu] = pv;
+                path.add(u);
+                path.add(v);
+            }
+        }
+        return path;
+    }
+    //find
+    public int find(int u, int[] parent) {
+        if (u != parent[u]) {
+            parent[u] = find(parent[u], parent);
+        }
+        return parent[u];
+    }
     public ArrayList<Edge> prim() {
         ArrayList<Edge> T = new ArrayList<Edge>(this.countNodes - 1);
         int s = 0;
