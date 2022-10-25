@@ -12,6 +12,7 @@ public class GraphList {
     private int countEdges;
     private ArrayList<ArrayList<Edge>> adjList;
     private ArrayList<Edge> edgeList;
+    private ArrayList<ArrayList<Edge>> path;
     private static final int INF = 999999;
 
     public GraphList(int countNodes) {
@@ -321,6 +322,9 @@ public class GraphList {
         }
         return path;
     }
+
+
+    
     //bellman-ford
     public ArrayList<Integer> bellmanFord(int source, int sink) {
         if (source < 0 || source > this.countNodes - 1) {
@@ -442,6 +446,76 @@ public class GraphList {
         }
         return path;
     }
+
+    // ASCII MAZE to GraphList from file
+    // # = wall
+    // whitespace = path
+    // S = start
+    // E = end
+    // Find path from S to E
+    // Return GraphList
+    public static GraphList asciiMazeToGraphList(String filename) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line = br.readLine();
+            int countNodes = 0;
+            int countEdges = 0;
+            int source = -1;
+            int sink = -1;
+            int width = line.length();
+            int height = 0;
+            while (line != null) {
+                for (int i = 0; i < line.length(); ++i) {
+                    if (line.charAt(i) == 'S') {
+                        source = countNodes;
+                    } else if (line.charAt(i) == 'E') {
+                        sink = countNodes;
+                    }
+                    ++countNodes;
+                }
+                line = br.readLine();
+                ++height;
+            }
+            br.close();
+            br = new BufferedReader(new FileReader(filename));
+            line = br.readLine();
+            GraphList graph = new GraphList(countNodes);
+            int u = 0;
+            while (line != null) {
+                for (int i = 0; i < line.length(); ++i) {
+                    if (line.charAt(i) == '#') {
+                        ++u;
+                        continue;
+                    }
+                    if (i > 0 && line.charAt(i - 1) != '#') {
+                        graph.addEdge(u, u - 1, 1);
+                        ++countEdges;
+                    }
+                    if (i < line.length() - 1 && line.charAt(i + 1) != '#') {
+                        graph.addEdge(u, u + 1, 1);
+                        ++countEdges;
+                    }
+                    if (u >= width) {
+                        graph.addEdge(u, u - width, 1);
+                        ++countEdges;
+                    }
+                    if (u < countNodes - width) {
+                        graph.addEdge(u, u + width, 1);
+                        ++countEdges;
+                    }
+                    ++u;
+                }
+                line = br.readLine();
+            }
+            br.close();
+            // print path from source to sink
+            return graph;
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            return null;
+        }
+    }
+    
     //find
     public int find(int u, int[] parent) {
         if (u != parent[u]) {
@@ -491,6 +565,7 @@ public class GraphList {
         }
         return T;
     }
+
 
     public int getCountNodes() {
         return countNodes;
