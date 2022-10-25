@@ -448,12 +448,14 @@ public class GraphList {
     }
 
     // ASCII MAZE to GraphList from file
-    // # = wall
+    // # = wallW 
+    // U+2588 = wall
     // whitespace = path
     // S = start
     // E = end
     // Find path from S to E
     // Return GraphList
+    
     public static GraphList asciiMazeToGraphList(String filename) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -483,15 +485,15 @@ public class GraphList {
             int u = 0;
             while (line != null) {
                 for (int i = 0; i < line.length(); ++i) {
-                    if (line.charAt(i) == '#') {
+                    if (line.charAt(i) == ('#' | '\u2588')) {
                         ++u;
                         continue;
                     }
-                    if (i > 0 && line.charAt(i - 1) != '#') {
+                    if (i > 0 && line.charAt(i - 1) != ('#' | '\u2588')) {
                         graph.addEdge(u, u - 1, 1);
                         ++countEdges;
                     }
-                    if (i < line.length() - 1 && line.charAt(i + 1) != '#') {
+                    if (i < line.length() - 1 && line.charAt(i + 1) != ('#' | '\u2588')) {
                         graph.addEdge(u, u + 1, 1);
                         ++countEdges;
                     }
@@ -508,7 +510,6 @@ public class GraphList {
                 line = br.readLine();
             }
             br.close();
-            // print path from source to sink
             return graph;
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());

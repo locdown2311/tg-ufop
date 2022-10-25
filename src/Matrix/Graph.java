@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-class Graph {
+public class Graph {
   private int _countNodes;
   private int _countEdges;
   private int[][] _adjMatrix;
@@ -51,6 +51,7 @@ class Graph {
 
     return min_index;
   }
+
 
   void printMinpath(int path_array[]) {
     System.out.println("Nó# \t Distancia da Origem");
