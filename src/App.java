@@ -11,18 +11,20 @@ public class App {
         long[] duration = new long[1];
         long startTime;
         long endTime;
+        ArrayList<Integer> caminho = new ArrayList<Integer>();
         GraphList graph = new GraphList(filename);
         switch (metodo) {
             case "dij":
                 startTime = System.nanoTime();
-                graph.djikstra(0,100);
+                caminho = graph.djikstra(0,100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Djikstra: " + duration[0] + "ns");
+                System.out.println("Caminho: " + caminho);
                 break;
             case "bf":
                 startTime = System.nanoTime();
-                ArrayList<Integer> caminho = graph.bellmanFord(0, 100);
+                 caminho = graph.bellmanFord(0, 100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford (Normal): " + duration[0] + "ns");
