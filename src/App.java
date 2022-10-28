@@ -59,7 +59,7 @@ public class App {
                 break;
             default:
                 // opções disponíveis
-                System.out.println("Opções disponíveis: dij, bf, bfm, fw");
+                System.out.println("Opções disponíveis: dij, bf, bfm, fw, maze");
                 break;
         }
     }
