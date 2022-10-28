@@ -416,7 +416,6 @@ public class GraphList {
             List<Integer> path = new ArrayList<>();
             path(parent, destiny, path);
             System.out.println("Caminho: " + path);
-
             System.out.println("Custo: " + dist[destiny]);
         }
     }

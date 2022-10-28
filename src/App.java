@@ -22,10 +22,11 @@ public class App {
                 break;
             case "bf":
                 startTime = System.nanoTime();
-                graph.bellmanFord(0, 100);
+                ArrayList<Integer> caminho = graph.bellmanFord(0, 100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford (Normal): " + duration[0] + "ns");
+                System.out.println("Caminho: " + caminho);
                 break;
             case "bfm":
                 startTime = System.nanoTime();
@@ -35,6 +36,12 @@ public class App {
                 System.out.println("Tempo de execução Bellman-Ford Melhorado: " + duration[0] + "ns");
                 break;
             case "fw":
+                startTime = System.nanoTime();
+                caminho = graph.floydWarshall(0, 100);
+                endTime = System.nanoTime();
+                duration[0] = (endTime - startTime);
+                System.out.println("Tempo de execução Floyd-Warshall: " + duration[0] + "ns");
+                System.out.println("Caminho: " + caminho);
                 break;
             default:
                 // opções disponíveis
