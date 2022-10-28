@@ -12,13 +12,14 @@ public class App {
         long startTime;
         long endTime;
         ArrayList<Integer> caminho = new ArrayList<Integer>();
-        GraphList graph = new GraphList(filename);
+        GraphList graph;
         /*
          * 
          */
         switch (metodo) {
             case "dij":
                 startTime = System.nanoTime();
+                graph = new GraphList(filename);
                 caminho = graph.djikstra(0,100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
@@ -27,7 +28,8 @@ public class App {
                 break;
             case "bf":
                 startTime = System.nanoTime();
-                 caminho = graph.bellmanFord(0, 100);
+                graph = new GraphList(filename);
+                caminho = graph.bellmanFord(0, 100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford (Normal): " + duration[0] + "ns");
@@ -35,6 +37,7 @@ public class App {
                 break;
             case "bfm":
                 startTime = System.nanoTime();
+                graph = new GraphList(filename);
                 graph.bellmanfordMelhorado(0, 100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
@@ -42,6 +45,7 @@ public class App {
                 break;
             case "fw":
                 startTime = System.nanoTime();
+                graph = new GraphList(filename);
                 caminho = graph.floydWarshall(0, 100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
