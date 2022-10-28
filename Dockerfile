@@ -1,4 +1,4 @@
-FROM ibmjava:sfj-alpine
+FROM ibmjava
 ARG FILE_NAME
 ARG METHOD
 COPY . /usr/src/grafos
