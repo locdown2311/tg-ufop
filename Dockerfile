@@ -1,4 +1,4 @@
-FROM ibmjava
+FROM amazoncorretto:11-alpine-jdk
 ARG FILE_NAME
 ARG METHOD
 COPY . /usr/src/grafos
