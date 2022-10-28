@@ -5,34 +5,33 @@ import Matrix.Graph;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        //GraphList graph = new GraphList("./src/txt/toy.txt");
-
-        //long[] duration = new long[3];
-        // measure time for djikstra
+        // get textfile name from args
+        String filename = args[0];
+        String metodo = args[1];
+        long[] duration = new long[1];
+        GraphList graph = new GraphList(filename);
+        switch (metodo) {
+            case "dij":
+                long startTime = System.nanoTime();
+                graph.djikstra(0,100);
+                long endTime = System.nanoTime();
+                duration[0] = (endTime - startTime);
+                System.out.println("Tempo de execução Djikstra: " + duration[0] + "ns");
+                break;
+            case "bf":
+                break;
+            case "bfm":
+                break;
+            case "fw":
+                break;
+            default:
+                // opções disponíveis
+                System.out.println("Opções disponíveis: dij, bf, bfm, fw");
+                break;
+        }
         
-        /* long startTime = System.nanoTime();
-        graph.djikstra(0,3);
-        long endTime = System.nanoTime();
-        duration[0] = (endTime - startTime);
-
-        startTime = System.nanoTime();
-        graph.floydWarshall(0, 3);
-        endTime = System.nanoTime();
-        duration[1] = (endTime - startTime);
-
-        startTime = System.nanoTime();
-        graph.bellmanFord(0, 3);
-        endTime = System.nanoTime();
-        duration[2] = (endTime - startTime);
- */
-
-        GraphList maze = GraphList.asciiMazeToGraphList("./src/txt/maze3_blocks.txt");
-        System.out.println(maze.djikstra(0, 68));
-        
-
-        // print time for djikstra, floyd warshall and bellman ford
-        /* System.out.println("Djikstra: " + duration[0]+" ns");
+        System.out.println("Djikstra: " + duration[0] + " ns");
         System.out.println("Floyd Warshall: " + duration[1] + " ns");
-        System.out.println("Bellman Ford: " + duration[2]+ " ns"); */
+        System.out.println("Bellman Ford: " + duration[2] + " ns");
     }
 }
