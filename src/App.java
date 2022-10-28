@@ -22,16 +22,14 @@ public class App {
                 break;
             case "bf":
                 startTime = System.nanoTime();
-                graph.bellmanford(0, 100);
+                graph.bellmanFord(0, 100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford (Normal): " + duration[0] + "ns");
-                
-
                 break;
             case "bfm":
                 startTime = System.nanoTime();
-                graph.bellmanFordMelhorado(0, 100);
+                graph.bellmanfordMelhorado(0, 100);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford Melhorado: " + duration[0] + "ns");
