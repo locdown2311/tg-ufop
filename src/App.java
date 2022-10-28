@@ -36,9 +36,5 @@ public class App {
                 System.out.println("Opções disponíveis: dij, bf, bfm, fw");
                 break;
         }
-        
-        System.out.println("Djikstra: " + duration[0] + " ns");
-        System.out.println("Floyd Warshall: " + duration[1] + " ns");
-        System.out.println("Bellman Ford: " + duration[2] + " ns");
     }
 }
