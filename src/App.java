@@ -16,7 +16,7 @@ public class App {
         switch (metodo) {
             case "dij":
                 startTime = System.nanoTime();
-                caminho = graph.djikstra(0,100);
+                caminho = graph.djikstra(0,7);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Djikstra: " + duration[0] + "ns");
@@ -24,7 +24,7 @@ public class App {
                 break;
             case "bf":
                 startTime = System.nanoTime();
-                 caminho = graph.bellmanFord(0, 100);
+                 caminho = graph.bellmanFord(0, 7);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford (Normal): " + duration[0] + "ns");
@@ -32,14 +32,14 @@ public class App {
                 break;
             case "bfm":
                 startTime = System.nanoTime();
-                graph.bellmanfordMelhorado(0, 100);
+                graph.bellmanfordMelhorado(0, 7);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford Melhorado: " + duration[0] + "ns");
                 break;
             case "fw":
                 startTime = System.nanoTime();
-                caminho = graph.floydWarshall(0, 100);
+                caminho = graph.floydWarshall(0, 7);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Floyd-Warshall: " + duration[0] + "ns");
