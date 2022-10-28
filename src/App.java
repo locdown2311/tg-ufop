@@ -13,6 +13,9 @@ public class App {
         long endTime;
         ArrayList<Integer> caminho = new ArrayList<Integer>();
         GraphList graph = new GraphList(filename);
+        /*
+         * 
+         */
         switch (metodo) {
             case "dij":
                 startTime = System.nanoTime();
@@ -48,7 +51,7 @@ public class App {
             case "maze":
                 startTime = System.nanoTime();
                 GraphList maze = GraphList.asciiMazeToGraphList(filename);
-                caminho = maze.bfs(0);
+                caminho = maze.dfsRec(0);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Maze: " + duration[0] + "ns");

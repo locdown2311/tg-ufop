@@ -1,5 +1,4 @@
 package List;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -143,28 +142,40 @@ public class GraphList {
     }
 
     // bfs
-    public ArrayList<Integer> bfs(int s) {
-        int[] desc = new int[this.countNodes];
-        ArrayList<Integer> Q = new ArrayList<>();
-        Q.add(s);
-        ArrayList<Integer> R = new ArrayList<>();
-        R.add(s);
-        desc[s] = 1;
-        // Main loop
-        while (Q.size() > 0) {
-            int u = Q.remove(0);
-            for (int v = 0; v < this.adjList.get(u).get(v).getSink(); ++v) {
-                if (this.adjList.get(u).get(v).getSink() != 0) { // Edge (u, v) exists
-                    if (desc[v] == 0) {
-                        Q.add(v);
-                        R.add(v);
-                        desc[v] = 1;
-                    }
+    public void bfs(int source) {
+        if (source < 0 || source > this.countNodes - 1) {
+            System.err.println("Invalid source: " + source);
+            return;
+        }
+        boolean[] visited = new boolean[this.countNodes];
+        int[] distance = new int[this.countNodes];
+        int[] parent = new int[this.countNodes];
+        for (int i = 0; i < this.countNodes; ++i) {
+            visited[i] = false;
+            distance[i] = INF;
+            parent[i] = -1;
+        }
+        visited[source] = true;
+        distance[source] = 0;
+        parent[source] = -1;
+        ArrayList<Integer> queue = new ArrayList<>();
+        queue.add(source);
+        while (!queue.isEmpty()) {
+            int u = queue.remove(0);
+            for (int idx = 0; idx < this.adjList.get(u).size(); ++idx) {
+                int v = this.adjList.get(u).get(idx).getSink();
+                if (!visited[v]) {
+                    visited[v] = true;
+                    distance[v] = distance[u] + 1;
+                    parent[v] = u;
+                    queue.add(v);
                 }
             }
         }
-        return R;
-
+        System.out.println("BFS:");
+        for (int i = 0; i < this.countNodes; ++i) {
+            System.out.println("Node " + i + " distance: " + distance[i] + " parent: " + parent[i]);
+        }
     }
 
     // dfs
@@ -203,6 +214,7 @@ public class GraphList {
             System.out.println("Node " + i + " distance: " + distance[i] + " parent: " + parent[i]);
         }
     }
+
 
     // connected
     public boolean connected() {
@@ -248,6 +260,7 @@ public class GraphList {
         }
         return false;
     }
+
 
     public ArrayList<Integer> dfsRec(int s) {
         int[] desc = new int[this.countNodes];
@@ -310,7 +323,7 @@ public class GraphList {
         }
         return path;
     }
-    // Retornar o caminho de um vértice ao outro usando bellman-ford
+    //Retornar o caminho de um vértice ao outro usando bellman-ford
 
     public ArrayList<Integer> bellmanFord(int source, int sink) {
         if (source < 0 || source > this.countNodes - 1) {
@@ -415,8 +428,9 @@ public class GraphList {
         path(parent, parent[vertex], path);
         path.add(vertex);
     }
-
-    // return path from source to sink floyd-warshall
+    
+    
+    //return path from source to sink floyd-warshall
     public ArrayList<Integer> floydWarshall(int source, int sink) {
         if (source < 0 || source > this.countNodes - 1) {
             System.err.println("Invalid source: " + source);
@@ -501,14 +515,14 @@ public class GraphList {
     }
 
     // ASCII MAZE to GraphList from file
-    // # = wallW
+    // # = wallW 
     // U+2588 = wall
     // whitespace = path
     // S = start
     // E = end
     // Find path from S to E
     // Return GraphList
-
+    
     public static GraphList asciiMazeToGraphList(String filename) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -569,15 +583,14 @@ public class GraphList {
             return null;
         }
     }
-
-    // find
+    
+    //find
     public int find(int u, int[] parent) {
         if (u != parent[u]) {
             parent[u] = find(parent[u], parent);
         }
         return parent[u];
     }
-
     public ArrayList<Edge> prim() {
         ArrayList<Edge> T = new ArrayList<Edge>(this.countNodes - 1);
         int s = 0;
@@ -620,6 +633,7 @@ public class GraphList {
         }
         return T;
     }
+
 
     public int getCountNodes() {
         return countNodes;
