@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class GraphList {
 
@@ -322,11 +323,67 @@ public class GraphList {
         }
         return path;
     }
+    
+    void path(int parent[], int vertex, List<Integer> path) {
+        if (vertex < 0) {
+            return;
+        }
 
+        path(parent, parent[vertex], path);
+        path.add(vertex);
+    }
+    
+    public void bellmanford(int source, int destiny) {
+        int dist[] = new int[this.getCountNodes()];
+        int parent[] = new int[this.getCountNodes()];
+
+        for (int i = 0; i < this.getCountNodes(); i++) {
+            dist[i] = 999999;
+        }
+
+        dist[source] = 0;
+
+        for (int i = 0; i < this.getCountNodes(); i++) {
+            parent[i] = -1;
+        }
+
+        for (int i = 0; i < this.getCountNodes() - 1; i++) {
+            for (Edge edge : this.edgeList) {
+                int u = edge.getSource();
+                int v = edge.getSink();
+                int w = edge.getWeight();
+
+                if (dist[u] != 999999 && dist[u] + w < dist[v]) {
+                    dist[v] = dist[u] + w;
+
+                    parent[v] = u;
+                }
+            }
+        }
+
+        for (Edge edge : this.edgeList) {
+            int u = edge.getSource();
+            int v = edge.getSink();
+            int w = edge.getWeight();
+
+            if (dist[u] != 999999 && dist[u] + w < dist[v]) {
+                System.out.println("Negative-weight cycle is found!!");
+                return;
+            }
+        }
+
+        if (destiny != source && dist[destiny] < 999999) {
+            List<Integer> path = new ArrayList<>();
+            path(parent, destiny, path);
+            System.out.println("Caminho: " + path);
+
+            System.out.println("Custo: " + dist[destiny]);
+        }
+    }
 
     
-    //bellman-ford
-    public ArrayList<Integer> bellmanFord(int source, int sink) {
+    //bellman-ford-melhorado
+    public ArrayList<Integer> bellmanFordMelhorado(int source, int sink) {
         if (source < 0 || source > this.countNodes - 1) {
             System.err.println("Invalid source: " + source);
             return null;
