@@ -20,7 +20,7 @@ public class App {
             case "dij":
                 startTime = System.nanoTime();
                 graph = new GraphList(filename);
-                caminho = graph.djikstra(0,100);
+                caminho = graph.djikstra(0,graph.getCountNodes()-1);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Djikstra: " + duration[0] + "ns");
@@ -29,7 +29,7 @@ public class App {
             case "bf":
                 startTime = System.nanoTime();
                 graph = new GraphList(filename);
-                caminho = graph.bellmanFord(0, 100);
+                caminho = graph.bellmanFord(0, graph.getCountNodes() - 1);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford (Normal): " + duration[0] + "ns");
@@ -38,7 +38,7 @@ public class App {
             case "bfm":
                 startTime = System.nanoTime();
                 graph = new GraphList(filename);
-                graph.bellmanfordMelhorado(0, 100);
+                graph.bellmanfordMelhorado(0, graph.getCountNodes() - 1);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Bellman-Ford Melhorado: " + duration[0] + "ns");
@@ -46,7 +46,7 @@ public class App {
             case "fw":
                 startTime = System.nanoTime();
                 graph = new GraphList(filename);
-                caminho = graph.floydWarshall(0, 100);
+                caminho = graph.floydWarshall(0, graph.getCountNodes() - 1);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Floyd-Warshall: " + duration[0] + "ns");
