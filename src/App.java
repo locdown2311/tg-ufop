@@ -55,7 +55,7 @@ public class App {
             case "maze":
                 startTime = System.nanoTime();
                 GraphList maze = GraphList.asciiMazeToGraphList(filename);
-                caminho = maze.dfsRec(0);
+                caminho = maze.djikstra(0, maze.getCountNodes()-1);
                 endTime = System.nanoTime();
                 duration[0] = (endTime - startTime);
                 System.out.println("Tempo de execução Maze: " + duration[0] + "ns");
