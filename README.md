@@ -20,7 +20,7 @@ docker run -it dij-grafos
 Ao chegar no diretório /src, utiliza-se
 
 ```
-./compila.sh ./compila.sh txt/... metodo
+./compila.sh txt/... metodo
 ```
 
 Dentre os métodos, estão: 
