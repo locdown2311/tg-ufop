@@ -24,11 +24,11 @@ Para métodos de caminhos:
 ```
 ./compila.sh txt/cm/.. metodo
 ```
+Metodos disponíveis: dij, bf, bfm, fw
 Para solução de labirintos:
 
 ```
 ./compila.sh txt/maze/.. maze
 ```
 
-Dentre os métodos, estão: 
-dij, bf, bfm, fw e maze para os labirintos.
+Dentre os métodos, estão: maze
