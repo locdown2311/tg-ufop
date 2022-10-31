@@ -7,3 +7,21 @@ Essa versão está incompleta mas ao menos foi realizado a tentativa de adaptaç
 
 ## Biblioteca
 A biblioteca criada em sala de aula e as adicionais usando lista de adjacência se encontram em /src
+
+## Requer Docker ou Podman (31/10)
+Com a configuração atual do programa, todos os testes foram executados utilizando um servidor virtual usando Docker
+
+```
+docker build -t dij-grafos .
+docker run -it dij-grafos 
+```
+
+## Utilização do compila.sh
+Ao chegar no diretório /src, utiliza-se
+
+```
+./compila.sh ./compila.sh txt/... metodo
+```
+
+Dentre os métodos, estão: 
+dij, bf, bfm, fw e maze para os labirintos.
