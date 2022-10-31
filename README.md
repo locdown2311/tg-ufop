@@ -19,8 +19,15 @@ docker run -it dij-grafos
 ## Utilização do compila.sh
 Ao chegar no diretório /src, utiliza-se
 
+Para métodos de caminhos:
+
 ```
-./compila.sh txt/... metodo
+./compila.sh txt/cm/.. metodo
+```
+Para solução de labirintos:
+
+```
+./compila.sh txt/maze/.. maze
 ```
 
 Dentre os métodos, estão: 
