@@ -25,6 +25,8 @@ Para métodos de caminhos:
 ./compila.sh txt/cm/.. metodo
 ```
 Metodos disponíveis: dij, bf, bfm, fw
+
+
 Para solução de labirintos:
 
 ```
